@@ -8,7 +8,7 @@ const server = http.createServer((req, res) => {
     }
     
     else if (req.url == '/about') {
-        res.write(aboutHtml);; 
+      res.write(aboutHtml);
     }
 
     else if (req.url == "/blog") {
@@ -32,7 +32,12 @@ const server = http.createServer((req, res) => {
     }
     
     else {
-      res.write("Page doesn't exist ");
+      res.writeHead(404, {
+        "Content-Type": "text/html",
+      });
+      res.write(
+        "<h3>This page doesn't exist</h3> <a href = '/'>Back to home page</a>"
+      );
     }
     
     res.end()
