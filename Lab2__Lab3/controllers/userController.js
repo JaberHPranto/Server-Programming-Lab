@@ -12,6 +12,23 @@ const getSignUpForm = (req,res) => {
 
 
 const signIn = async (req, res) => {
+    const { email, password } = req.body
+
+    // Checking whether is email exist or not
+    const existingUser = await User.findOne({ email })
+    if (!existingUser)
+        return res.status(404).json({ message: "Email doesn't exist" })
+    
+    console.log(existingUser);
+    // checking for password
+    const isValidPassword = await bcrypt.compare(password, existingUser.password)
+    if (!isValidPassword)
+        return res.status(404).json({ message: "Invalid Credentials" })
+    
+    
+
+
+
     res.send("Sign In")
 }
 
