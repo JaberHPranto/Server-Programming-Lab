@@ -1,6 +1,9 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../model/userModel')
+var ls = require('local-storage');
+const { LocalStorage } = require('node-localstorage');
+var localStorage = new LocalStorage('./scratch');
 
 const getSignInForm = (req,res) => {
     res.sendFile('signin.html',{root:'./views/users'})
@@ -33,13 +36,16 @@ const signIn = async (req, res) => {
             { email: existingUser.email, userId: existingUser._id }, process.env.SECRET, {
                 expiresIn:'1h'
         })
-        
-        res.cookie('token', token)
-        return res.redirect('/') 
+
+        // saving the token to local storage
+        localStorage.setItem('token',token) 
+          
+        return res.redirect('/users/dashboard') 
 
            
     } catch (error) {
-        res.status(401).json({message:"Authentication failed",error})
+        console.log(error);
+        res.status(401).json({message:"Authentication failed"})
     }
 }
 
@@ -63,7 +69,7 @@ const signUp = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 12)
         const result = await User.create({ name, email, password: hashedPassword })
 
-        res.send("Sign Up")
+        res.redirect('/users/signup')
     } catch (error) {
         res.status(500).json({message:"Sign up failed",error})
     }
