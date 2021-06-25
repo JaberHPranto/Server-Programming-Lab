@@ -26,7 +26,9 @@ const signUp = async (req, res) => {
     if (password !== confirmPassword)
         return res.status(404).json({ message: "Password doesn't match" })
     
-    
+    // store into database 
+    const hashedPassword = await bcrypt.hash(password, 12)
+    const result = await User.create({ name, email, password: hashedPassword })
 
     res.send("Sign Up")
 }
