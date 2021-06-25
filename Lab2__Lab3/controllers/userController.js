@@ -12,24 +12,34 @@ const getSignUpForm = (req,res) => {
 
 
 const signIn = async (req, res) => {
+
     const { email, password } = req.body
-
-    // Checking whether is email exist or not
-    const existingUser = await User.findOne({ email })
-    if (!existingUser)
-        return res.status(404).json({ message: "Email doesn't exist" })
-    
-    console.log(existingUser);
-    // checking for password
-    const isValidPassword = await bcrypt.compare(password, existingUser.password)
-    if (!isValidPassword)
-        return res.status(404).json({ message: "Invalid Credentials" })
-    
-    
-
-
-
-    res.send("Sign In")
+    try {
+        // Checking whether is email exist or not
+        const existingUser = await User.findOne({ email })
+        if (!existingUser)
+            return res.status(404).json({ message: "Email doesn't exist" })
+        
+        console.log(existingUser);
+        // checking for password
+        const isValidPassword = await bcrypt.compare(password, existingUser.password)
+        if (!isValidPassword)
+            return res.status(404).json({ message: "Invalid Credentials" })
+        
+        // generating jwt 
+        const token = jwt.sign(
+            { email: existingUser.email, userId: existingUser._id }, process.env.SECRET, {
+                expiresIn:'1h'
+        })
+        
+        res.status(200).json({
+            result: existingUser,
+            access_token:token
+        })
+        
+    } catch (error) {
+        res.status(401).json({message:"Authentication failed"})
+    }
 }
 
 
