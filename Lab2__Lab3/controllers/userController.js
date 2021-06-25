@@ -9,7 +9,9 @@ const getSignInForm = (req,res) => {
 const getSignUpForm = (req,res) => {
     res.sendFile("signup.html",{root:"./views/users"})
 }
-
+const dashboardHandler = (req,res) => {
+    res.send("Welcome to dashboard")
+}
 
 const signIn = async (req, res) => {
 
@@ -32,13 +34,12 @@ const signIn = async (req, res) => {
                 expiresIn:'1h'
         })
         
-        res.status(200).json({
-            result: existingUser,
-            access_token:token
-        })
-        
+        res.cookie('token', token)
+        return res.redirect('/') 
+
+           
     } catch (error) {
-        res.status(401).json({message:"Authentication failed"})
+        res.status(401).json({message:"Authentication failed",error})
     }
 }
 
@@ -69,4 +70,4 @@ const signUp = async (req, res) => {
     
 }
 
-module.exports = {signIn,signUp,getSignInForm,getSignUpForm}
+module.exports = {signIn,signUp,getSignInForm,getSignUpForm,dashboardHandler}
