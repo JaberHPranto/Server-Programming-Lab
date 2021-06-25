@@ -11,7 +11,7 @@ dotenv.config()
 app.use(express.json({ limit: '30mb', extended: true }))
 app.use(express.urlencoded({ limit: '30mb', extended: true }))
 
-app.use("/user",userRoute)
+app.use("/users",userRoute)
 
 
 app.get('/',(req,res) => {
