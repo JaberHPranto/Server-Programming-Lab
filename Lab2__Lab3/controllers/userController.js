@@ -13,7 +13,6 @@ const getSignUpForm = (req, res) => {
     res.sendFile("register-v2.html",{root:"./views/template/pages/examples"})
 }
 const dashboardHandler = (req,res) => {
-    // res.sendFile("dashboard.html",{root:"./views/users"})
     res.sendFile("index.html",{root:"./views/template"})
 }
 
@@ -80,7 +79,7 @@ const signUp = async (req, res) => {
 
 const logout = (req,res) => {
     localStorage.clear();
-    res.send("You are logged out")
+    res.sendFile("logout.html",{root:"./views/template"})
 }
 
 
