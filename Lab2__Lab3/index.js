@@ -1,18 +1,20 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
+const cors = require("cors");
 
 const userRoute = require('./routes/userRoute')
-
 const app = express()
 dotenv.config()
 
 // middleware
-app.use(express.json({ limit: '30mb', extended: true }))
+app.use(express.static("public"))
+// app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({ limit: '30mb', extended: true }))
+app.use(cors());
+app.use(express.json({ limit: '30mb', extended: true }))
 
-app.use("/users",userRoute)
-
+app.use(userRoute)
 
 app.get('/',(req,res) => {
     res.send('Welcome')
