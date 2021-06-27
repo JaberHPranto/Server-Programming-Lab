@@ -1,5 +1,5 @@
 const express = require('express');
-const { signIn, signUp,getSignInForm,getSignUpForm,dashboardHandler,logout } = require('../controllers/userController')
+const { signIn, signUp,getSignInForm,getSignUpForm,dashboardHandler,logout,pageNotFound } = require('../controllers/userController')
 const checkSignIn = require("../middlewares/auth")
 
 const router = express.Router()
@@ -16,6 +16,9 @@ router.post("/signup", signUp)
 
 router.get("/logout",logout)
 
-router.get("/dashboard",checkSignIn,dashboardHandler)
+router.get("/dashboard", checkSignIn, dashboardHandler)
+
+// Error page
+router.use(pageNotFound)
 
 module.exports=router

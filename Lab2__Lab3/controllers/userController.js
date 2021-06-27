@@ -83,4 +83,8 @@ const logout = (req,res) => {
     res.send("You are logged out")
 }
 
-module.exports = {signIn,signUp,getSignInForm,getSignUpForm,dashboardHandler,logout}
+const pageNotFound = (req,res) => {
+    res.sendFile("404.html",{root:"./views/template/pages/examples"})
+}
+
+module.exports = {signIn,signUp,getSignInForm,getSignUpForm,dashboardHandler,logout,pageNotFound}
