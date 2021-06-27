@@ -1,9 +1,18 @@
+const jwt = require('jsonwebtoken');
 const { LocalStorage } = require('node-localstorage');
 var localStorage = new LocalStorage('./scratch');
+
 const checkSignIn = (req, res, next) => {
-    // console.log("Checking");
-    // console.log(localStorage.getItem('token'))
-    next()
+    try {
+        const token = localStorage.getItem('token')
+        const decode = jwt.verify(token, process.env.SECRET)
+        console.log(decode.name);
+        next()
+    } catch (error) {
+        console.log(error);
+        res.redirect("/")
+    }
+   
 }
 
 module.exports = checkSignIn

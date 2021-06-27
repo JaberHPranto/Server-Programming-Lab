@@ -34,7 +34,7 @@ const signIn = async (req, res) => {
         
         // generating jwt 
         const token = jwt.sign(
-            { email: existingUser.email, userId: existingUser._id }, process.env.SECRET, {
+            { email: existingUser.email,name:existingUser.name,userId: existingUser._id }, process.env.SECRET, {
                 expiresIn:'1h'
         })
 
@@ -78,4 +78,9 @@ const signUp = async (req, res) => {
     
 }
 
-module.exports = {signIn,signUp,getSignInForm,getSignUpForm,dashboardHandler}
+const logout = (req,res) => {
+    localStorage.clear();
+    res.send("You are logged out")
+}
+
+module.exports = {signIn,signUp,getSignInForm,getSignUpForm,dashboardHandler,logout}

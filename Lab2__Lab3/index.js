@@ -9,16 +9,11 @@ dotenv.config()
 
 // middleware
 app.use(express.static("public"))
-// app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors());
 app.use(express.json({ limit: '30mb', extended: true }))
 
 app.use(userRoute)
-
-app.get('/',(req,res) => {
-    res.send('Welcome')
-})
 
 // connect to mongodb
 const PORT = process.env.PORT || 5000
