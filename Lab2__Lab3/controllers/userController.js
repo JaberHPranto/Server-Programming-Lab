@@ -6,11 +6,11 @@ const { LocalStorage } = require('node-localstorage');
 var localStorage = new LocalStorage('./scratch');
 
 const getSignInForm = (req,res) => {
-    res.sendFile('signin.html',{root:'./views/users'})
+    res.sendFile("login-v2.html",{root:"./views/template/pages/examples"})
 }
 
-const getSignUpForm = (req,res) => {
-    res.sendFile("signup.html",{root:"./views/users"})
+const getSignUpForm = (req, res) => {
+    res.sendFile("register-v2.html",{root:"./views/template/pages/examples"})
 }
 const dashboardHandler = (req,res) => {
     // res.sendFile("dashboard.html",{root:"./views/users"})
