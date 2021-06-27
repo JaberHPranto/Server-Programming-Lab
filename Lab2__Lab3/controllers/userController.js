@@ -13,7 +13,7 @@ const getSignUpForm = (req,res) => {
     res.sendFile("signup.html",{root:"./views/users"})
 }
 const dashboardHandler = (req,res) => {
-    res.send("Welcome to dashboard")
+    res.sendFile("dashboard.html",{root:"./views/users"})
 }
 
 const signIn = async (req, res) => {
@@ -69,7 +69,7 @@ const signUp = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 12)
         const result = await User.create({ name, email, password: hashedPassword })
 
-        res.redirect('/users/signup')
+        res.redirect('/users/signin')
     } catch (error) {
         res.status(500).json({message:"Sign up failed",error})
     }
