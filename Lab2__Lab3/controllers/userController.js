@@ -14,7 +14,7 @@ const getSignUpForm = (req, res) => {
 }
 const dashboardHandler = (req,res) => {
     // res.sendFile("dashboard.html",{root:"./views/users"})
-    res.sendFile("index3.html",{root:"./views/template"})
+    res.sendFile("index.html",{root:"./views/template"})
 }
 
 const signIn = async (req, res) => {
@@ -83,8 +83,6 @@ const logout = (req,res) => {
     res.send("You are logged out")
 }
 
-const pageNotFound = (req,res) => {
-    res.sendFile("404.html",{root:"./views/template/pages/examples"})
-}
 
-module.exports = {signIn,signUp,getSignInForm,getSignUpForm,dashboardHandler,logout,pageNotFound}
+
+module.exports = {signIn,signUp,getSignInForm,getSignUpForm,dashboardHandler,logout}
