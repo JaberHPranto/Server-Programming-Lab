@@ -41,7 +41,7 @@ const signIn = async (req, res) => {
         // saving the token to local storage
         localStorage.setItem('token',token) 
           
-        return res.redirect('/users/dashboard') 
+        return res.redirect('/dashboard') 
 
            
     } catch (error) {
@@ -58,7 +58,7 @@ const signUp = async (req, res) => {
         // checking for email
         const existingUser = await User.findOne({ email })
         if (existingUser)
-            return res.status(404).json({ message: "User not found" })
+            return res.status(404).json({ message: "User with same email already exist" })
         
         // checking for password
         if (password.length < 6)
@@ -70,8 +70,9 @@ const signUp = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 12)
         const result = await User.create({ name, email, password: hashedPassword })
 
-        res.redirect('/users/signin')
+        res.redirect('/signin')
     } catch (error) {
+        console.log(error);
         res.status(500).json({message:"Sign up failed",error})
     }
     
