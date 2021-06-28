@@ -9,7 +9,6 @@ const checkSignIn = (req, res, next) => {
         console.log(decode.name);
         next()
     } catch (error) {
-        console.log(error);
         res.redirect("/")
     }
    

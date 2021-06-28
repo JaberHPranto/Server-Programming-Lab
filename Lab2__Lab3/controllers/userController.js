@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../model/userModel')
-var ls = require('local-storage');
+const alert = require('alert')
 const { LocalStorage } = require('node-localstorage');
 var localStorage = new LocalStorage('./scratch');
 
@@ -22,14 +22,19 @@ const signIn = async (req, res) => {
     try {
         // Checking whether is email exist or not
         const existingUser = await User.findOne({ email })
-        if (!existingUser)
-            return res.status(404).json({ message: "Email doesn't exist" })
+        if (!existingUser) {
+            // return res.status(404).json({ message: "Email doesn't exist" })
+            alert("Email doesn't exist")
+            return res.redirect("/signin")
+        }
         
-        console.log(existingUser);
         // checking for password
         const isValidPassword = await bcrypt.compare(password, existingUser.password)
-        if (!isValidPassword)
-            return res.status(404).json({ message: "Invalid Credentials" })
+        if (!isValidPassword) {
+            // return res.status(404).json({ message: "Invalid Credentials" })
+            alert("Invalid Credentials")
+            return res.redirect("/signin")
+        }
         
         // generating jwt 
         const token = jwt.sign(
@@ -56,14 +61,24 @@ const signUp = async (req, res) => {
     try {
         // checking for email
         const existingUser = await User.findOne({ email })
-        if (existingUser)
-            return res.status(404).json({ message: "User with same email already exist" })
+        if (existingUser) {
+            // return res.status(404).json({ message: "User with same email already exist" })
+            alert("User with same email already exist")
+            return res.redirect("/signup")
+            
+        }
         
         // checking for password
-        if (password.length < 6)
-            return res.status(404).json({ message: "Password must be at least 6 character" })
-        if (password !== confirmPassword)
-            return res.status(404).json({ message: "Password doesn't match" })
+        if (password.length < 6) {
+            // return res.status(404).json({ message: "Password must be at least 6 character" })
+            alert("Password must be at least 6 character")
+            return res.redirect("/signup")
+        }
+        if (password !== confirmPassword) {
+            // return res.status(404).json({ message: "Password doesn't match" })
+            alert("Password doesn't match")
+            return res.redirect("/signup")
+        }
         
         // store into database 
         const hashedPassword = await bcrypt.hash(password, 12)

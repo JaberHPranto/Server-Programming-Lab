@@ -1,4 +1,4 @@
-const homePage = (req,res) => {
+const homePage = (req, res) => {
     res.sendFile("home.html",{root:'./views/template'})
 }
 
