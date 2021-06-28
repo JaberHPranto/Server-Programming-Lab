@@ -6,12 +6,13 @@ const cors = require("cors");
 const userRoute = require('./routes/userRoute')
 const app = express()
 dotenv.config()
-
 // middleware
 app.use(express.static("public"))
 app.use(express.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors());
 app.use(express.json({ limit: '30mb', extended: true }))
+
+app.set('view engine','ejs')
 
 app.use(userRoute)
 

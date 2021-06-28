@@ -7,6 +7,7 @@ const checkSignIn = (req, res, next) => {
         const token = localStorage.getItem('token')
         const decode = jwt.verify(token, process.env.SECRET)
         console.log(decode.name);
+        req.username = decode.name
         next()
     } catch (error) {
         res.redirect("/")

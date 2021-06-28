@@ -13,7 +13,7 @@ const getSignUpForm = (req, res) => {
     res.sendFile("register-v2.html",{root:"./views/template/pages/examples"})
 }
 const dashboardHandler = (req,res) => {
-    res.sendFile("index.html",{root:"./views/template"})
+    res.render('dashboard',{name:req.username})
 }
 
 const signIn = async (req, res) => {
