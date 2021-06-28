@@ -20,7 +20,7 @@ const signIn = async (req, res) => {
 
     const { email, password } = req.body
     try {
-        // Checking whether is email exist or not
+        // Checking whether this email exist or not
         const existingUser = await User.findOne({ email })
         if (!existingUser) {
             // return res.status(404).json({ message: "Email doesn't exist" })
@@ -85,6 +85,7 @@ const signUp = async (req, res) => {
         const result = await User.create({ name, email, password: hashedPassword })
 
         res.redirect('/signin')
+        
     } catch (error) {
         console.log(error);
         res.status(500).json({message:"Sign up failed",error})

@@ -6,7 +6,6 @@ const checkSignIn = (req, res, next) => {
     try {
         const token = localStorage.getItem('token')
         const decode = jwt.verify(token, process.env.SECRET)
-        console.log(decode.name);
         req.username = decode.name
         next()
     } catch (error) {
