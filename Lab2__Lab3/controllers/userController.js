@@ -59,6 +59,12 @@ const signUp = async (req, res) => {
     const { name, email, password, confirmPassword } = req.body
     
     try {
+
+        if (!name || !email || !password || !confirmPassword) {
+            alert("No fields should remain empty")
+            return res.redirect("/signup")           
+        }
+
         // checking for email
         const existingUser = await User.findOne({ email })
         if (existingUser) {
