@@ -14,7 +14,7 @@ const getSignUpForm = (req, res) => {
     
 }
 const dashboardHandler = (req,res) => {
-    res.render('dashboard',{name:req.username})
+    res.render('dashboard')
 }
 
 const signIn = async (req, res) => {
@@ -22,7 +22,7 @@ const signIn = async (req, res) => {
     const { email, password } = req.body
     try {
         // Checking whether this email exist or not
-        const existingUser = await User.findOne({ email })   
+        const existingUser = await User.findOne({ email })
         if (!existingUser) {
             // return res.status(404).json({ message: "Email doesn't exist" })
             alert("Email doesn't exist")

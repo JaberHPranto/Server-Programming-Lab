@@ -14,4 +14,11 @@ const checkSignIn = (req, res, next) => {
    
 }
 
-module.exports = checkSignIn
+const addUserData = (req, res, next) => {  
+// locals An object that contains response local variables scoped to the request, and therefore available only to the view(s) rendered during that request / response cycle (if any)
+    res.locals.req = req;
+    res.locals.res = res;
+    next()
+}
+
+module.exports = {checkSignIn,addUserData}

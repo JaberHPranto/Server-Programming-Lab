@@ -4,6 +4,8 @@ const dotenv = require('dotenv')
 const cors = require("cors");
 
 const userRoute = require('./routes/userRoute')
+const mathOlympiadRoute = require('./routes/mathOlympiadRoute')
+
 const app = express()
 dotenv.config()
 
@@ -16,6 +18,7 @@ app.use(cors());
 // setting template engine
 app.set('view engine','ejs')
 
+app.use("/math-olympiad",mathOlympiadRoute)
 app.use(userRoute)
 
 // connect to mongodb
