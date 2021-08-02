@@ -6,16 +6,11 @@
     <div>
       <a class="hiddenanchor" id="signup"></a>
       <a class="hiddenanchor" id="signin"></a>
-      <%if(errors.length>0){%>
-      <div class="alert alert-danger">
-        <%errors.forEach(error=>{%> <%= error%><br />
-        <%})%>
-      </div>
-      <%}%>
+
       <div class="login_wrapper">
         <div class="animate form login_form">
           <section class="login_content">
-            <form action="/users/register" method="POST">
+            <form action="./register" method="POST">
               <h1>ICT <b>Fest,</b> 2021.</h1>
               <div>
                 <input
@@ -49,8 +44,8 @@
                   type="password"
                   class="form-control"
                   placeholder="Retype password"
-                  id="confirm_password"
-                  name="confirm_password"
+                  id="confirmPassword"
+                  name="confirmPassword"
                 />
               </div>
               <div>
@@ -64,7 +59,7 @@
               <div class="separator">
                 <p class="change_link">
                   Already have an account?
-                  <a href="/users/login" class="to_register"> Log In! </a>
+                  <a href="./login" class="to_register"> Log In! </a>
                 </p>
 
                 <div class="clearfix"></div>

@@ -6,13 +6,11 @@
     <div>
       <a class="hiddenanchor" id="signup"></a>
       <a class="hiddenanchor" id="signin"></a>
-      <%if(error.length>0){%>
-      <div class="alert alert-danger"><%=error%></div>
-      <%}%>
+
       <div class="login_wrapper">
         <div class="animate form login_form">
           <section class="login_content">
-            <form action="/users/login" method="POST">
+            <form action="./login" method="POST">
               <h1>ICT <b>Fest,</b> 2021.</h1>
               <div>
                 <input
@@ -43,9 +41,7 @@
               <div class="separator">
                 <p class="change_link">
                   New here?
-                  <a href="/users/register" class="to_register">
-                    Create Account!
-                  </a>
+                  <a href="./register" class="to_register"> Create Account! </a>
                 </p>
 
                 <div class="clearfix"></div>

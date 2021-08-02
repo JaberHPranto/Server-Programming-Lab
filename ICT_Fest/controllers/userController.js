@@ -6,11 +6,12 @@ const { LocalStorage } = require('node-localstorage');
 var localStorage = new LocalStorage('./scratch');
 
 const getSignInForm = (req,res) => {
-    res.sendFile("login-v2.html",{root:"./views/template/pages/examples"})
+    res.render("users/login.ejs")
 }
 
 const getSignUpForm = (req, res) => {
-    res.sendFile("register-v2.html",{root:"./views/template/pages/examples"})
+    res.render("users/register.ejs")
+    
 }
 const dashboardHandler = (req,res) => {
     res.render('dashboard',{name:req.username})
@@ -21,11 +22,11 @@ const signIn = async (req, res) => {
     const { email, password } = req.body
     try {
         // Checking whether this email exist or not
-        const existingUser = await User.findOne({ email })
+        const existingUser = await User.findOne({ email })   
         if (!existingUser) {
             // return res.status(404).json({ message: "Email doesn't exist" })
             alert("Email doesn't exist")
-            return res.redirect("/signin")
+            return res.redirect("/login")
         }
         
         // checking for password
@@ -33,7 +34,7 @@ const signIn = async (req, res) => {
         if (!isValidPassword) {
             // return res.status(404).json({ message: "Invalid Credentials" })
             alert("Invalid Credentials")
-            return res.redirect("/signin")
+            return res.redirect("/login")
         }
         
         // generating jwt 
@@ -62,7 +63,7 @@ const signUp = async (req, res) => {
 
         if (!name || !email || !password || !confirmPassword) {
             alert("No fields should remain empty")
-            return res.redirect("/signup")           
+            return res.redirect("/register")           
         }
 
         // checking for email
@@ -70,7 +71,7 @@ const signUp = async (req, res) => {
         if (existingUser) {
             // return res.status(404).json({ message: "User with same email already exist" })
             alert("User with same email already exist")
-            return res.redirect("/signup")
+            return res.redirect("/register")
             
         }
         
@@ -78,19 +79,19 @@ const signUp = async (req, res) => {
         if (password.length < 6) {
             // return res.status(404).json({ message: "Password must be at least 6 character" })
             alert("Password must be at least 6 character")
-            return res.redirect("/signup")
+            return res.redirect("/register")
         }
         if (password !== confirmPassword) {
             // return res.status(404).json({ message: "Password doesn't match" })
             alert("Password doesn't match")
-            return res.redirect("/signup")
+            return res.redirect("/register")
         }
         
         // store into database 
         const hashedPassword = await bcrypt.hash(password, 12)
         const result = await User.create({ name, email, password: hashedPassword })
 
-        res.redirect('/signin')
+        res.redirect('/login')
         
     } catch (error) {
         console.log(error);
@@ -101,7 +102,8 @@ const signUp = async (req, res) => {
 
 const logout = (req,res) => {
     localStorage.clear();
-    res.sendFile("logout.html",{root:"./views/template"})
+    res.send("logged out")
+    // res.sendFile("logout.html",{root:"./views/template"})
 }
 
 

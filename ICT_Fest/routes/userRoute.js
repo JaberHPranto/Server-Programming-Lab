@@ -5,13 +5,14 @@ const checkSignIn = require("../middlewares/auth")
 
 const router = express.Router()
 
-router.get("/",homePage)
+router.get("/", homePage)
 
-router.get("/signin", getSignInForm)
-router.get("/signup", getSignUpForm)
 
-router.post("/signin", signIn)
-router.post("/signup", signUp)
+router.get("/login", getSignInForm)
+router.get("/register", getSignUpForm)
+
+router.post("/login", signIn)
+router.post("/register", signUp)
 
 router.get("/logout",logout)
 
