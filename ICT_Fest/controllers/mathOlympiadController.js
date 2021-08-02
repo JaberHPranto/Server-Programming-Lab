@@ -1,13 +1,18 @@
-const express = require('express');
-const checkSignIn = require("../middlewares/auth")
-const { getMO,postMO,deleteMO,getMOList} = require('../controllers/mathOlympiadController')
+const getMO = (req, res) => {
+    res.render("math-olympiad/register.ejs")
+}
+const postMO = (req, res) => {
+    res.render("math-olympiad/register.ejs")
+}
+const getMOList = (req, res) => {
+    res.render("math-olympiad/list.ejs")
+}
+const deleteMO = (req, res) => {
+    const id = req.params.id
+    console.log(id);
+    res.render("math-olympiad/list.ejs")
+}
 
-const router = express.Router()
-
-router.get("/register",checkSignIn,getMO)
-router.post("/register",checkSignIn,postMO)
-
-router.get("/list", checkSignIn, getMOList)
-router.delete("/delete/:id",checkSignIn,deleteMO)
-
-
+module.exports = {
+    getMO,postMO,getMOList,deleteMO
+};
