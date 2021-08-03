@@ -12,6 +12,7 @@
   "dependencies": {
     "alert": "^5.0.10",
     "bcrypt": "^5.0.1",
+    "connect-flash": "^0.1.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "ejs": "^3.1.6",
