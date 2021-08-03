@@ -1,5 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const session = require('express-session')
+const flash = require('connect-flash')
 const dotenv = require('dotenv')
 const cors = require("cors");
 
@@ -15,9 +17,21 @@ app.use(express.urlencoded({ limit: '30mb', extended: true }))
 app.use(express.json({ limit: '30mb', extended: true }))
 app.use(cors());
 
+// flash message
+app.use(
+  session({
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+app.use(flash())
+
+
 // setting template engine
 app.set('view engine','ejs')
 
+// routes
 app.use("/math-olympiad",mathOlympiadRoute)
 app.use(userRoute)
 
