@@ -16,25 +16,32 @@ const postMO = async (req, res) => {
 
         let error = ""
 
-        const isValidParticipant = await MathOlympiad.find({ name, contact })
+        const isValidParticipant = await MathOlympiad.find({ name: name, contact: contact })
         if (!isValidParticipant) {
-            console.log("Participant with this name and contact number already exist");
+            error = "Participant with this name and contact number already exist"
+            console.log(error);
             return res.redirect('/math-olympiad/register')
         }
 
-        const participant = new MathOlympiad({
-            name,category,contact,email,institution,total,paid,selected,tshirt
-        })
-
-        await participant.save();
+        try {
+            const participant = new MathOlympiad({
+                name, category, contact, email, institution, total, paid, selected, tshirt   
+            })
+            error = "Participant has been registered successfully"
+            await participant.save();
+            console.log(error);
+            return res.redirect('/math-olympiad/register')
+        } catch (err) {
+            error = "An unexpected error occurred while registering participant !"
+            console.log(error);
+            return res.redirect('/math-olympiad/register')
+        }
 
 
     } catch (err) {
         console.log(err);
         return res.redirect('/math-olympiad/register')
     }
-
-
 
     res.render("math-olympiad/register.ejs")
 }
