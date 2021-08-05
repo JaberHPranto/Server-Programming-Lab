@@ -41,4 +41,4 @@ mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnified
     .then(() => app.listen(PORT, () => { console.log(`Server started on port ${PORT}`) }))
     .catch((err) => console.log("Failed to start", err))
 
-mongoose.set('useFindAndModify', true)
+mongoose.set('useFindAndModify', false)

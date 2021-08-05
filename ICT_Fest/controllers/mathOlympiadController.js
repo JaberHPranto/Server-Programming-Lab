@@ -114,6 +114,24 @@ const paymentDoneMo = async (req, res) => {
     }
 }
 
+
+const selectMo = async (req, res) => {
+    const id = req.params.id
+    try {
+        await MathOlympiad.findOneAndUpdate({ _id: id }, { selected: true },)
+        
+        error="Participant has been selected for Math Olympiad"
+        req.flash("error", error)
+        res.redirect('/math-olympiad/list')
+
+    } catch (err) {
+        console.log(err);
+        error="Data could not be updated"
+        req.flash("error", error)
+        res.redirect('/math-olympiad/list')
+    }
+}
+
 module.exports = {
-    getMO,postMO,getMOList,deleteMO,paymentDoneMo
+    getMO,postMO,getMOList,deleteMO,paymentDoneMo,selectMo
 };

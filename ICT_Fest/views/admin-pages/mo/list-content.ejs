@@ -15,9 +15,11 @@
       </div>
       <div class="x_content">
         <br />
+
         <% let success1 = "Record has been deleted successfully"%> <% let
-        success2 = "Payment completed successfully"%>
-        <%if(error.length>0){if(error== success1 || success2){%>
+        success2 = "Payment completed successfully"%> <% let success3 =
+        "Participant has been selected for Math Olympiad"%>
+        <%if(error.length>0){if(error== success1 || success2 || success3){%>
         <div class="alert alert-success"><%=error%></div>
         <%}else{%>
         <div class="alert alert-danger"><%=error%></div>
@@ -82,12 +84,11 @@
                       <%}%>
                     </td>
                     <td>
-                      <!-- <% const selectURL="select/"+participant._id%>
+                      <% const selectURL="select/"+participant._id%>
                       <a href="<%= selectURL %>">
                         <i class="fa fa-check"></i>
                         <span class="fa fa-chevron"></span>
-                      </a> -->
-                      Select
+                      </a>
                     </td>
                     <td>
                       <% const paymentDoneURL="./paymentDone/"+participant._id%>
