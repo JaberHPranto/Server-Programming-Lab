@@ -51,13 +51,33 @@ const postMO = async (req, res) => {
     }
 
 }
-const getMOList = (req, res) => {
-    res.render("math-olympiad/list.ejs")
+
+
+const getMOList = async (req, res) => {
+    try {
+        let all_participants = []
+        all_participants = await MathOlympiad.find({})
+
+        return res.render("math-olympiad/list.ejs", {
+            error: req.flash("error"),
+            participants: all_participants
+        })
+        
+    } catch (err) {
+        console.log(err);
+        let error = "Failed to get the list"
+        return res.render("math-olympiad/list.ejs", {
+            error: req.flash("error", error),
+            participants: all_participants
+        })
+    }
+
 }
+
+
 const deleteMO = (req, res) => {
     const id = req.params.id
     console.log(id);
-    res.render("math-olympiad/list.ejs")
 }
 
 module.exports = {
