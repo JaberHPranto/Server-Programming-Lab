@@ -20,7 +20,7 @@
         <div class="alert alert-success"><%=error%></div>
         <%}else{%>
         <div class="alert alert-danger"><%=error%></div>
-        <%}%> <%}%>
+        <%} }%>
         <div class="row">
           <div class="col-sm-12">
             <div class="card-box table-responsive">
@@ -32,7 +32,6 @@
               >
                 <thead>
                   <tr>
-                    <th>ID</th>
                     <th>Name</th>
                     <th>Category</th>
                     <th>Contact No</th>
@@ -50,17 +49,63 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <% if(participants.length>0){
+                  participants.forEach(participant=>{%>
                   <tr>
-                    <td>Tiger</td>
-                    <td>Nixon</td>
-                    <td>System Architect</td>
-                    <td>Edinburgh</td>
-                    <td>61</td>
-                    <td>2011/04/25</td>
-                    <td>$320,800</td>
-                    <td>5421</td>
-                    <td>t.nixon@datatables.net</td>
+                    <td><%= participant.name %></td>
+                    <td><%= participant.category %></td>
+                    <td><%= participant.contact %></td>
+                    <td><%= participant.email %></td>
+                    <td><%= participant.institution %></td>
+                    <td><%= participant.tshirt %></td>
+                    <td><%= participant.total %></td>
+                    <td><%= participant.paid %></td>
+                    <td>
+                      <% if(participant.selected==true){%>
+                      <p style="color: green">Yes</p>
+                      <%}else{%>
+                      <p style="color: brown">No</p>
+                      <%}%>
+                    </td>
+                    <td>
+                      <% if(participant.paid==participant.total){%>
+                      <p style="color: green">Successful</p>
+                      <%}else{%>
+                      <p style="color: brown">Incomplete</p>
+                      <%}%>
+                    </td>
+                    <td>
+                      <!-- <% const selectURL="select/"+participant._id%>
+                      <a href="<%= selectURL %>">
+                        <i class="fa fa-check"></i>
+                        <span class="fa fa-chevron"></span>
+                      </a> -->
+                      Select
+                    </td>
+                    <td>
+                      <!-- <% const paymentDoneURL="paymentDone/"+participant._id%>
+                      <a href="<%= paymentDoneURL %>">
+                        <i class="fa fa-money"></i>
+                        <span class="fa fa-chevron"></span>
+                      </a> -->
+                      Payment done
+                    </td>
+                    <td>
+                      <% const editURL="edit/"+participant._id%>
+                      <a href="<%= editURL %>">
+                        <i class="fa fa-pencil"></i>
+                        <span class="fa fa-chevron"></span>
+                      </a>
+                    </td>
+                    <td>
+                      <% const deleteURL="/delete/"+participant._id%>
+                      <a href="<%= deleteURL %>">
+                        <i class="fa fa-trash"></i>
+                        <span class="fa fa-chevron"></span>
+                      </a>
+                    </td>
                   </tr>
+                  <% }) } %>
                 </tbody>
               </table>
             </div>
