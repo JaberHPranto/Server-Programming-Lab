@@ -102,8 +102,7 @@ const signUp = async (req, res) => {
 
 const logout = (req,res) => {
     localStorage.clear();
-    res.send("logged out")
-    // res.sendFile("logout.html",{root:"./views/template"})
+    res.redirect("/")
 }
 
 
