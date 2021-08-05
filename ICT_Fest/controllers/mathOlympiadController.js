@@ -1,7 +1,9 @@
 const MathOlympiad = require("../model/mathOlympiadModel")
+
 const getMO = (req, res) => {
     res.render("math-olympiad/register.ejs",{error:req.flash("error")})
 }
+
 const postMO = async (req, res) => {
     try {
 
@@ -42,8 +44,6 @@ const postMO = async (req, res) => {
             req.flash("error",error)
             return res.redirect('/math-olympiad/register')
         }
-        
-        // res.render("math-olympiad/register.ejs")
 
     } catch (err) {
         console.log(err);
@@ -51,7 +51,6 @@ const postMO = async (req, res) => {
     }
 
 }
-
 
 const getMOList = async (req, res) => {
     try {
@@ -75,9 +74,21 @@ const getMOList = async (req, res) => {
 }
 
 
-const deleteMO = (req, res) => {
+const deleteMO = async(req, res) => {
     const id = req.params.id
-    console.log(id);
+    let error =""
+    try {
+        await MathOlympiad.deleteOne({ _id: id })
+        error="Record has been deleted successfully"
+        req.flash("error", error)
+        res.redirect('/math-olympiad/list')
+        
+    } catch (err) {
+        console.log(err);
+        error="Failed to delete the record"
+        req.flash("error", error)
+        res.redirect('/math-olympiad/list')
+    }
 }
 
 module.exports = {
