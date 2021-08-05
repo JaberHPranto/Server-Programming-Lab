@@ -4,6 +4,7 @@ const getMO = (req, res) => {
     res.render("math-olympiad/register.ejs",{error:req.flash("error")})
 }
 
+
 const postMO = async (req, res) => {
     try {
 
@@ -52,6 +53,7 @@ const postMO = async (req, res) => {
 
 }
 
+
 const getMOList = async (req, res) => {
     try {
         let all_participants = []
@@ -91,6 +93,27 @@ const deleteMO = async(req, res) => {
     }
 }
 
+
+const paymentDoneMo = async (req, res) => {
+    const id = req.params.id
+    try {
+        const participant = await MathOlympiad.findOne({ _id: id })
+        const total = participant.total
+
+        await MathOlympiad.findOneAndUpdate({ _id: id }, { paid: total },)
+        
+        error="Payment completed successfully"
+        req.flash("error", error)
+        res.redirect('/math-olympiad/list')
+
+    } catch (err) {
+        console.log(err);
+        error="Data could not be updated"
+        req.flash("error", error)
+        res.redirect('/math-olympiad/list')
+    }
+}
+
 module.exports = {
-    getMO,postMO,getMOList,deleteMO
+    getMO,postMO,getMOList,deleteMO,paymentDoneMo
 };

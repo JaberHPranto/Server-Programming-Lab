@@ -15,8 +15,9 @@
       </div>
       <div class="x_content">
         <br />
-        <% let success = "Record has been deleted successfully"%>
-        <%if(error.length>0){if(error==success){%>
+        <% let success1 = "Record has been deleted successfully"%> <% let
+        success2 = "Payment completed successfully"%>
+        <%if(error.length>0){if(error== success1 || success2){%>
         <div class="alert alert-success"><%=error%></div>
         <%}else{%>
         <div class="alert alert-danger"><%=error%></div>
@@ -41,9 +42,15 @@
                     <th>Total</th>
                     <th>Paid</th>
                     <th>Selected</th>
-                    <th>Payment Status</th>
+                    <th>
+                      Payment <br />
+                      Status
+                    </th>
                     <th>Select</th>
-                    <th>Payment Done</th>
+                    <th>
+                      Payment <br />
+                      Done
+                    </th>
                     <th>Edit</th>
                     <th>Delete</th>
                   </tr>
@@ -64,14 +71,14 @@
                       <% if(participant.selected==true){%>
                       <p style="color: green">Yes</p>
                       <%}else{%>
-                      <p style="color: brown">No</p>
+                      <p style="color: rgb(209, 55, 55)">No</p>
                       <%}%>
                     </td>
                     <td>
                       <% if(participant.paid==participant.total){%>
                       <p style="color: green">Successful</p>
                       <%}else{%>
-                      <p style="color: brown">Incomplete</p>
+                      <p style="color: rgb(209, 55, 55)">Incomplete</p>
                       <%}%>
                     </td>
                     <td>
@@ -83,12 +90,11 @@
                       Select
                     </td>
                     <td>
-                      <!-- <% const paymentDoneURL="paymentDone/"+participant._id%>
+                      <% const paymentDoneURL="./paymentDone/"+participant._id%>
                       <a href="<%= paymentDoneURL %>">
                         <i class="fa fa-money"></i>
                         <span class="fa fa-chevron"></span>
-                      </a> -->
-                      Payment done
+                      </a>
                     </td>
                     <td>
                       <% const editURL="edit/"+participant._id%>
