@@ -1,4 +1,5 @@
-const MathOlympiad = require("../model/mathOlympiadModel")
+const MathOlympiad = require("../model/mathOlympiadModel");
+const ProgrammingContest = require("../model/programmingContestModel");
 
 const getMO = (req, res) => {
     res.render("math-olympiad/register.ejs",{error:req.flash("error")})

@@ -76,6 +76,44 @@ const deletePC = async (req, res) => {
     }
 }
 
+const paymentDonePC = async (req, res) => {
+    const id = req.params.id
+    try {
+        const participant = await ProgrammingContest.findOne({ _id: id })
+        const total = participant.total
+
+        await ProgrammingContest.findOneAndUpdate({ _id: id }, { paid: total },)
+        
+        error="Payment completed successfully"
+        req.flash("error", error)
+        res.redirect('/programming-contest/list')
+
+    } catch (err) {
+        console.log(err);
+        error="Data could not be updated"
+        req.flash("error", error)
+        res.redirect('/programming-contest/list')
+    }
+}
+
+
+const selectPC = async (req, res) => {
+    const id = req.params.id
+    try {
+        await ProgrammingContest.findOneAndUpdate({ _id: id }, { selected: true },)
+        
+        error="Participant has been selected for Programming contest"
+        req.flash("error", error)
+        res.redirect('/programming-contest/list')
+
+    } catch (err) {
+        console.log(err);
+        error="Data could not be updated"
+        req.flash("error", error)
+        res.redirect('/programming-contest/list')
+    }
+}
+
 module.exports = {
-    getPC,postPC,getPCList,deletePC
+    getPC,postPC,getPCList,deletePC,paymentDonePC,selectPC
 }
