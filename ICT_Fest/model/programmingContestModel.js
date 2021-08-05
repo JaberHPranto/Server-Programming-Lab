@@ -104,5 +104,5 @@ const pcSchema = mongoose.Schema({
 })
 
 
-const ProgrammingContest = mongoose.model("MathOlympiad", pcSchema)
+const ProgrammingContest = mongoose.model("ProgrammingContest", pcSchema)
 module.exports = ProgrammingContest
