@@ -59,6 +59,23 @@ const getPCList = async (req, res) => {
     }
 }
 
+const deletePC = async (req, res) => {
+    const id = req.params.id
+    let error =""
+    try {
+        await ProgrammingContest.deleteOne({ _id: id })
+        error="Record has been deleted successfully"
+        req.flash("error", error)
+        res.redirect('/programming-contest/list')
+        
+    } catch (err) {
+        console.log(err);
+        error="Failed to delete the record"
+        req.flash("error", error)
+        res.redirect('/programming-contest/list')
+    }
+}
+
 module.exports = {
-    getPC,postPC,getPCList
+    getPC,postPC,getPCList,deletePC
 }
