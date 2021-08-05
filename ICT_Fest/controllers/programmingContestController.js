@@ -40,6 +40,25 @@ const postPC = async (req, res) => {
   
 }
 
+const getPCList = async (req, res) => {
+    let teams = []
+    try {
+        teams = await ProgrammingContest.find({})
+        res.render("programming-contest/list.ejs", {
+            error: req.flash("error"),
+            teams
+        })
+        
+    } catch (err) {
+        console.log(err);
+        let error = "Failed to get the list"
+        return res.render("programming-contest/list.ejs", {
+            error: req.flash("error", error),
+            teams
+        })        
+    }
+}
+
 module.exports = {
-    getPC,postPC
+    getPC,postPC,getPCList
 }
