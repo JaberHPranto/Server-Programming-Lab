@@ -133,6 +133,55 @@ const selectMo = async (req, res) => {
     }
 }
 
+const editMo = async (req, res) => {
+    const id = req.params.id
+    try {
+        const participant = await MathOlympiad.findById(id)
+        res.render("math-olympiad/edit.ejs", { error: req.flash("error"), participant })
+
+    } catch (err) {
+        console.log(err);
+        res.send(err)
+    }
+    
+}
+
+const postEditMo = async (req, res) => {
+    const { name, institution, contact, email, category, tshirt } = req.body
+    let error = ""
+    try {
+        const participant = await MathOlympiad.findOne({ name, contact })
+        if (!participant) {
+            error="No participant found"
+            req.flash("error", error)
+            return res.redirect('/math-olympiad/list')
+        }
+
+        console.log(category);
+        let registrationFee = 0;
+        let total = participant.total
+        if (category === 'school') registrationFee = 250;
+        else if (category === 'college') registrationFee = 400;
+        else if (category === 'university') registrationFee = 500;
+
+        console.log(registrationFee);
+        console.log(total);
+
+            if (participant.total !== registrationFee) {
+                total = registrationFee
+            }
+
+
+        await MathOlympiad.findByIdAndUpdate(participant._id, { institution, email, category, tshirt,total })
+        res.redirect('/math-olympiad/list')
+
+    } catch (error) {
+        error="Failed to update"
+        req.flash("error", error)
+        res.redirect('/math-olympiad/list')
+    }
+}
+
 module.exports = {
-    getMO,postMO,getMOList,deleteMO,paymentDoneMo,selectMo
+    getMO,postMO,getMOList,deleteMO,paymentDoneMo,selectMo,editMo,postEditMo
 };
