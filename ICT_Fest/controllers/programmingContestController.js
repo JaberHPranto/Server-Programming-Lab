@@ -1,4 +1,7 @@
 const ProgrammingContest = require("../model/programmingContestModel")
+const { sendEmail } = require("../utils/mailService")
+const { mailMessage } = require("../utils/mailTemplate")
+const {participationCodeGenerator} = require("../utils/utility")
 
 const getPC = (req, res) => {
     res.render("programming-contest/register.ejs",{error:req.flash("error")})
@@ -11,7 +14,8 @@ const postPC = async (req, res) => {
     try {
         const total = 1200
         const paid = 0
-        const selected=false
+        const selected = false
+        const teamCode = participationCodeGenerator()
 
         const isExistedTeam = await ProgrammingContest.findOne({teamName})
         if (isExistedTeam) {
@@ -20,9 +24,24 @@ const postPC = async (req, res) => {
             return res.redirect('/programming-contest/register')
         }
 
-        const team = new ProgrammingContest({ teamName, institution, coachName, coachContact, coachEmail, coachTshirt, teamLeaderName, teamLeaderContact, teamLeaderEmail, teamLeaderTshirt, memberOneName, memberOneContact, memberOneEmail, memberOneTshirt, memberTwoName, memberTwoContact, memberTwoEmail, memberTwoTshirt, total, paid, selected })
+        const team = new ProgrammingContest({ teamName, institution, coachName, coachContact, coachEmail, coachTshirt, teamLeaderName, teamLeaderContact, teamLeaderEmail, teamLeaderTshirt, memberOneName, memberOneContact, memberOneEmail, memberOneTshirt, memberTwoName, memberTwoContact, memberTwoEmail, memberTwoTshirt, total, paid, selected,teamCode })
         
         await team.save()
+
+        // Sending mail
+        const teamLeadMessage = mailMessage(teamLeaderName, "Programming Contest", teamCode)
+        const memberOneMessage = mailMessage(memberOneName, "Programming Contest", teamCode)
+        const memberTwoMessage = mailMessage(memberTwoName, "Programming Contest", teamCode)
+        const coachMessage = mailMessage(coachName, "Programming Contest", teamCode)
+        try {
+            await sendEmail({to:teamLeaderEmail,subject:"Confirmation Mail",text:teamLeadMessage})
+            await sendEmail({to:memberOneEmail,subject:"Confirmation Mail",text:memberOneMessage})
+            await sendEmail({to:memberTwoEmail,subject:"Confirmation Mail",text:memberTwoMessage})
+            await sendEmail({to:coachEmail,subject:"Confirmation Mail",text:coachMessage})
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json("Failed to sent E-mail")
+        }
 
         error = "Team has been registered successfully"
         req.flash("error",error)

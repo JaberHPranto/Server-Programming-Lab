@@ -100,6 +100,10 @@ const pcSchema = mongoose.Schema({
         type: String,
         default:Date.now()
     },
+    teamCode: {
+        type: String,
+        unique:true
+    }
 
 })
 
