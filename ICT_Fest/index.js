@@ -44,3 +44,4 @@ mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnified
     .catch((err) => console.log("Failed to start", err))
 
 mongoose.set('useFindAndModify', false)
+mongoose.set('useCreateIndex', true);

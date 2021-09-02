@@ -41,6 +41,10 @@ const moSchema = mongoose.Schema({
         type: String,
         default:Date.now()
     },
+    participationCode: {
+        type: String,
+        unique:true
+    }
 
 })
 
