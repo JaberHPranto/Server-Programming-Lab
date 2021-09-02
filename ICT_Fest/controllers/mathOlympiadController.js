@@ -1,5 +1,5 @@
 const MathOlympiad = require("../model/mathOlympiadModel");
-const ProgrammingContest = require("../model/programmingContestModel");
+const {sendEmail} = require("../utils/mailService")
 
 const getMO = (req, res) => {
     res.render("math-olympiad/register.ejs",{error:req.flash("error")})
@@ -38,7 +38,20 @@ const postMO = async (req, res) => {
             })
             error = "Participant has been registered successfully"
             await participant.save();
-            req.flash("error",error)
+            req.flash("error", error)
+
+            const message = `
+           <h1> ICT Fest, 2021 </h1>
+           <h2>You have requested a password reset</h2>
+           <p>Please go to this link to reset your password</p>
+           `
+            
+            // Sending Mail
+            try {
+                await sendEmail({to:email,subject:"Confirmation Mail",text:message})
+            } catch (error) {
+                console.log(error);
+            }
             return res.redirect('/math-olympiad/register')
 
         } catch (err) {
